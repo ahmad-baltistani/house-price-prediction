@@ -2,3 +2,4 @@
 
 Learning Machine Learning Engineering from
 development to production.
+Learning Git properly.
