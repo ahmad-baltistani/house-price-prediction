@@ -1,4 +1,5 @@
-from src.config import RAW_DATA_DIR, TARGET_COLUMN
+from src.config import RAW_DATA_DIR, TARGET_COLUMN, MODEL_PATH, PREPROCESSOR_PATH
+from src.utils.save_artifacts import save_artifact
 from src.data.load_data import load_data
 from src.features.split_data import split_data
 from src.features.preprocess import create_preprocessor
@@ -20,6 +21,9 @@ def run_training_pipeline():
 
     rmse, r2 = evaluate_model(model, X_test_processed, y_test) 
 
+    save_artifact(model, MODEL_PATH)
+    save_artifact(preprocessor, PREPROCESSOR_PATH)
+        
     return model, preprocessor, rmse, r2
 
 if __name__ == "__main__": 
