@@ -21,10 +21,17 @@ def test_split_data():
     assert len(y_train) == 80
     assert len(y_test) == 20
 
+    assert len(X_train) + len(X_test) == len(X)
+    assert len(y_train) + len(y_test) == len(y)
+
+    assert (X_train["feature1"] == y_train).all()
+    assert (X_test["feature1"] == y_test).all()
+
 
 def test_create_preprocessor():
+    import numpy as np
     df = pd.DataFrame({
-        "age": [10, 20, 30, 40],
+        "age": [10, 20, None, 40],
         "income": [100, 200, 300, 400],
         "location": ["A", "B", "A", "B"]
     })
@@ -35,4 +42,15 @@ def test_create_preprocessor():
 
     assert X_processed.shape[0] == 4
     assert X_processed.shape[1] == 4
+
+    new_data = pd.DataFrame({
+    "age": [25],
+    "income": [250],
+    "location": ["C"]
+    })
+    new_processed = preprocessor.transform(new_data)
+    assert new_processed.shape[0] == 1
+    assert new_processed.shape[1] == 4
+
+    assert not np.isnan(X_processed).any()
 

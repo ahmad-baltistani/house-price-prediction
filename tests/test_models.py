@@ -15,9 +15,14 @@ def test_train_model():
     y_train = np.array([2, 4, 6, 8])
 
     model = train_model(X_train, y_train)
+    
+    predictions = model.predict(X_train)
 
     assert model is not None
     assert hasattr(model, "predict")
+    
+    assert len(predictions) == len(y_train)
+    assert np.allclose(predictions, y_train)
 
 
 def test_evaluate_model():
@@ -38,5 +43,6 @@ def test_evaluate_model():
         y_train
     )
 
-    assert rmse >= 0
-    assert r2 <= 1
+    # R2 AND RMSE comparisn is not for our real California Housing. this is sample for the above data.
+    assert np.isclose(rmse, 0.0)
+    assert np.isclose(r2, 1.0)
